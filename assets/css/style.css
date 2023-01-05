@@ -1,0 +1,9 @@
+body {
+    background-color: darkgoldenrod;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.navbar {
+    height: 70px;
+}
