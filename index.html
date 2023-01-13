@@ -10,42 +10,87 @@
 </head>
 
 <body>
-    <!-- Navbar -->
-    <div class="container-fluid">
-        <nav class="navbar navbar-light bg-light">
-            <span class="navbar-text" style="background-color: rgb(160, 162, 87);">
-            <div class="col-12 text-center">
-            <h1>Weather Dashboard</h1>
-        </span>
-      </nav>
+    
+<!--navbar-->
+    <div class="jumbotron container-fluid mt-2 text-center p-2" style="background-color: rgb(160, 162, 87);">
+        <nav class="navbar rounded" style="background-color: rgb(213, 177, 18);">
+            <h1><strong>Weather Dashboard</strong></h1>
+            </nav>
     </div>
 
-    <!-- Column containing search field, search button, and search history -->
+<div class="container">
+    <!--Row for searching a city-->
     <div class="row">
-        <div class="col-3 bg-light pb-2 pt-3" id="searchResults">
-            <div class="row">
-                <div class="col-12">
-                    <h3>Search for a City:</h3>
+        <div class="col-sm-4 bg-light rounded">
+            <h4 class="pt-1"><strong>Search for a City:</strong></h4>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"id="search-city" placeholder="Enter a city"><button type="button" id="searchButton" class="btn" style="background-color: rgb(160, 162, 87);">Search</button>
+            </div>
+                <button class=" btn" style="background-color: rgb(160, 162, 87);" type="button" id="clear-history">Clear history</button>
+            <ul class="list-group"></ul>
+        </div>
+
+        <div class="col-sm-8">
+            <div class="row ml-2 border border-dark rounded" style="background-color: rgb(160, 162, 87);">
+                <div class="col-sm-12" id="current-weather">
+                    <h3 class="city-name mb-1 mt-2 bolder" id="current-city"></h3>
+                        <p>Temp:<span class="current" id="temperature"></span></p>
+                        <p>Wind:<span class="current" id="wind-speed"></span></p>
+                        <p>Humidity:<span class="current" id="humidity"></span></p> 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="enterCity" placeholder="Enter your city"><button type="button" id="searchButton" class="btn btn-primary">Search</button>
+            
+            
+            <!--Row for future data to be dumped here-->
+            <div class="col-sm-12" id ="future-weather">
+                <h3>5-Day Forecast:</h3>
+                <div class="row">
+                    <div class="col-sm-2 forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                        <p id="fDate0"></p>
+                        <p id="fImg0"></p>
+                        <p>Temp:<span id="fTemp0"></span></p>
+                        <p>Wind:<span id="fWind0"></span></p>
+                        <p>Humidity:<span id="fHumidity0"></span></p>
+                    </div>
+                    <div class="col-sm-2 forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                        <p id="fDate1"></p>
+                        <p id="fImg1"></p>
+                        <p>Temp:<span id="fTemp1"></span></p>
+                        <p>Wind:<span id="fWind1"></span></p>
+                        <p>Humidity:<span id="fHumidity1"></span></p>
+                    </div>
+                    <div class="col-sm-2 forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                        <p id="fDate2"></p>
+                        <p id="fImg2"></p>
+                        <p>Temp:<span id="fTemp2"></span></p>
+                        <p>Wind:<span id="fWind2"></span></p>
+                        <p>Humidity:<span id="fHumidity2"></span></p>
+                    </div>
+                    <div class="col-sm-2 forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                        <p id="fDate3"></p>
+                        <p id="fImg3"></p>
+                        <p>Temp:<span id="fTemp3"></span></p>
+                        <p>Wind:<span id="fWind3"></span></p>
+                        <p>Humidity:<span id="fHumidity3"></span></p>
+                    </div>
+                    <div class="col-sm-2 forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                        <p id="fDate4"></p>
+                        <p id="fImg4"></p>
+                        <p>Temp:<span id="fTemp4"></span></p>
+                        <p>Wind:<span id="fWind4"></span></p>
+                        <p>Humidity:<span id="fHumidity4"></span></p>
                     </div>
                 </div>
+            
             </div>
-            <!-- Display search history -->
-            <div class="row mt-3">
-                <div class="col-12">
 
-                    <ul id="searchHistory" class="list-group">
-                        <!-- Append list of searched cities -->
-                    </ul>
-
-                </div>
-            </div>
         </div>
+    </div>
+
+</div>
+<footer class="mt-5 p-3 text-center" style="background-color: rgb(213, 177, 18);">Weather Dashboard &copy 2022 Made <i class="icon ion-heart"></i> By Anna Marcus</footer>
+
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
