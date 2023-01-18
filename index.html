@@ -25,7 +25,7 @@
             <h2 class="pt-1"><strong>Search for a City:</strong></h2>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="searchCity" name="searchCity" placeholder="Enter a city">
-                <div class="input-group-append" id="current-city">
+                <div class="input-group-append">
                     <button type="submit" id="searchButton" class="button rounded border border-dark" style="background-color: rgb(160, 162, 87);">Search</button>
                 </div>
             </div>
@@ -39,6 +39,7 @@
             <div class="row ml-2 border border-dark rounded" style="background-color: rgb(160, 162, 87);">
                 <div class="col-sm-12" id="current-weather">
                     <h3 class="city-name mb-1 mt-2 bolder" id="current-city"></h3>
+                        <img id="current-icon" src="">
                         <p>Temp:<span class="current" id="temperature"></span></p>
                         <p>Wind:<span class="current" id="wind-speed"></span></p>
                         <p>Humidity:<span class="current" id="humidity"></span></p> 

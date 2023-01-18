@@ -1,3 +1,5 @@
+
+
 // API key
 var apiKey = "84451525b0d6082d8cc3aa7f5d04ae49";
 var searchCity = $("#searchCity");
@@ -46,8 +48,15 @@ function getWeatherData(city) {
       .then(response => response.json());
   }
   
+
+
 function updateWeatherInfo(data) {
+    let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+    let icon = $("<img>").attr("src", iconUrl);
+    $("#current-icon").attr("src", iconUrl);
+
     $("#current-city").html(data.name);
+    
     let temperatureInCelsius = data.main.temp - 273.15;
     $("#temperature").html(temperatureInCelsius + "°C");
     let windSpeed = data.wind.speed;
@@ -55,6 +64,7 @@ function updateWeatherInfo(data) {
     let humidity = data.main.humidity;
     $("#humidity").html(humidity + " %");
 }
+
 
 function weatherNow(city) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
@@ -94,6 +104,18 @@ function displayWeather(event) {
     }
   }
   
+  function updateForecastInfo(data) {
+    $("#fDate0").html(data.date);
+    let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+    let icon = $("<img>").attr("src", iconUrl);
+    $("#fImg0").append(icon);
+    let temperatureInCelsius = data.main.temp - 273.15;
+    $("#fTemp0").html(temperatureInCelsius + "°C");
+    let windSpeed = data.wind.speed;
+    $("#fWind0").html(windSpeed + " m/s");
+    let humidity = data.main.humidity;
+    $("#fHumidity0").html(humidity + " %");
+}
 
 
 $("#searchButton").on("click", displayWeather);
