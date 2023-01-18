@@ -25,8 +25,11 @@
             <h2 class="pt-1"><strong>Search for a City:</strong></h2>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" id="searchCity" name="searchCity" placeholder="Enter a city">
-                <button type="submit" id="searchButton" class="button rounded border border-dark" style="background-color: rgb(160, 162, 87);">Search</button>
+                <div class="input-group-append" id="current-city">
+                    <button type="submit" id="searchButton" class="button rounded border border-dark" style="background-color: rgb(160, 162, 87);">Search</button>
+                </div>
             </div>
+           
                 <button class="button rounded border border-dark" style="background-color: rgb(160, 162, 87);" type="button" id="clear-history">Clear history</button>
             <ul class="list-group"></ul>
             <div id="history-list"></div>
