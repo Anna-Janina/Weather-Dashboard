@@ -1,5 +1,3 @@
-
-
 // API key
 var apiKey = "84451525b0d6082d8cc3aa7f5d04ae49";
 var searchCity = $("#searchCity");
@@ -10,8 +8,6 @@ var currentTemperature = $("#temperature");
 var currentWindSpeed = $("#wind-speed");
 var currentHumidity = $("#humidity");
 let city = "";
-// var weatherNowURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + apiKey;
-
 
 
 function displayWeather(event){
@@ -24,23 +20,18 @@ function displayWeather(event){
 
 // Fetch some data
 function weatherNow(city) {
-// var city = document.getElementById('searchCity').value
 fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
 .then(res => res.json())
 .then(data => {
     console.log(data)
     var city = data.name;
     $("#current-city").html(city);
-    
     saveSearchToLocalStorage(city)
 })
 .catch(error => {
     $("#error-message").html("Error: " + error.message);
     $("#error-message").show();
 })
-// .then(data => {
-//     saveSearchToLocalStorage(city)
-// })
 }
 
 function getWeatherData(city) {
@@ -48,21 +39,19 @@ function getWeatherData(city) {
       .then(response => response.json());
   }
   
-
-
 function updateWeatherInfo(data) {
     let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-    let icon = $("<img>").attr("src", iconUrl);
-    $("#current-icon").attr("src", iconUrl);
-
-    $("#current-city").html(data.name);
-    
+    var date=new Date(data.dt*1000).toLocaleDateString();
+    $("#current-city").html(data.name + " " + "("+date+")");
+    $("#current-city").append("<img src='" + iconUrl + "'>");
+    let today = new Date();
+    let day = today.toLocaleDateString();
     let temperatureInCelsius = data.main.temp - 273.15;
-    $("#temperature").html(temperatureInCelsius + "°C");
+    $("#temperature").html(" " + temperatureInCelsius + "°C");
     let windSpeed = data.wind.speed;
-    $("#wind-speed").html(windSpeed + " m/s");
+    $("#wind-speed").html(" " + windSpeed + " m/s");
     let humidity = data.main.humidity;
-    $("#humidity").html(humidity + " %");
+    $("#humidity").html(" " + humidity + " %");
 }
 
 
@@ -79,9 +68,6 @@ function weatherNow(city) {
     })
 }
 
-
-
-
 function displayWeather(event) {
     event.preventDefault();
     if (searchCity.val().trim() !== "") {
@@ -96,7 +82,7 @@ function displayWeather(event) {
     }
   }
   
-  function convertTemperature(temp, unit) {
+function convertTemperature(temp, unit) {
     if (unit === "C") {
       return temp - 273.15;
     } else if (unit === "F") {
@@ -104,7 +90,7 @@ function displayWeather(event) {
     }
   }
   
-  function updateForecastInfo(data) {
+function updateForecastInfo(data) {
     $("#fDate0").html(data.date);
     let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
     let icon = $("<img>").attr("src", iconUrl);
@@ -147,9 +133,7 @@ console.log(localStorage)
 // var weatherIcon = 
 // var IconUrl
 
-//Display that data
 
-//When I click on the button I want to see relevant data
 
 
 
