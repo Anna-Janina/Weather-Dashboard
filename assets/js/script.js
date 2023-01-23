@@ -38,13 +38,16 @@ function displayWeather(event) {
     if (searchCity.val().trim() !== "") {
         city = searchCity.val().trim();
             weatherNow(city);
-            getWeatherForecast(city)
+            saveSearchToLocalStorage(city);
+            getWeatherForecast(city);
+            createHistoryButton(city)
             .then(updateWeatherInfo)
             .then(() => saveSearchToLocalStorage(city))
             .catch(error => {
               $("#error-message").html("Error: " + error.message);
               $("#error-message").show();
             });
+            
         }
     }
 
@@ -68,11 +71,10 @@ function updateWeatherInfo(data) {
     let temperatureInCelsius = (data.main.temp - 273.15).toFixed(1);
     $("#temperature").html(" " + temperatureInCelsius + "°C");
     let windSpeed = data.wind.speed;
-    $("#wind-speed").html(" " + windSpeed + " m/s");
+    $("#wind-speed").html(" " + windSpeed + " MPH");
     let humidity = data.main.humidity;
     $("#humidity").html(" " + humidity + " %");
 }
-
 
 
 function getWeatherForecast(city) {
@@ -81,8 +83,6 @@ function getWeatherForecast(city) {
     .then(data => {
         const forecastData = data.list
         let forecastHTML = '';
-
-
         for (let i = 0; i < forecastData.length; i += 8) {
             const forecast = forecastData[i]
             const date = new Date(forecast.dt * 1000)
@@ -96,13 +96,18 @@ function getWeatherForecast(city) {
                  <img src="${iconUrl}">
                  <p>Temp: ${convertTemperature(temp, "C").toFixed(1)}°C</p>
 
-                 <p>Wind: ${wind}</p>
+                 <p>Wind: ${wind}MPH</p>
                  <p>Humidity: ${forecast.main.humidity}%</p>
                  </div>`;
         }
         $(".forecast-container").html(forecastHTML);
     })
 }
+
+
+
+
+
 
 function saveSearchToLocalStorage(city) {
     var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
@@ -112,12 +117,65 @@ function saveSearchToLocalStorage(city) {
     historyList.append(`<p>${city}</p>`)
 }
 
+// Create a container element to hold the buttons
+let historyContainer = $("#history-container");
+
+function createHistoryButton(city) {
+    var historyContainer = document.getElementById("history-container");
+    var newButton = document.createElement("button");
+    newButton.classList.add("btn", "btn-secondary", "history-button");
+    newButton.innerHTML = city;
+    newButton.addEventListener("click", function() {
+        weatherNow(city);
+        getWeatherForecast(city);
+    });
+    historyContainer.appendChild(newButton);
+}
+fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
+    .then(res => res.json())
+    .then(data => {
+        updateWeatherInfo(data);
+        createHistoryButton(city);
+    })
+
+
+// On page load, check local storage for previous searches
+$(document).ready(function() {
+    let previousSearches = JSON.parse(localStorage.getItem("searches")) || [];
+    previousSearches.forEach(createHistoryButton);
+});
+
+
+function saveSearchToLocalStorage(city) {
+    localStorage.setItem(city, city);
+  }
+
+
+$(document).ready(function() {
+    let previousSearches = JSON.parse(localStorage.getItem("searches")) || [];
+    previousSearches.forEach(createHistoryButton);
+});
+
+
+function clearSearch(){
+    localStorage.clear();
+    $("#history").empty();
+ }
+ clearHistory.on("click", clearSearch);
+
+
+
+clearHistory.on("click", function () {
+    localStorage.clear();
+    $("#history").empty();
+});
+
 
 $("#searchButton").on("click", displayWeather);
 $("#clear-history").on("click", function (event) {
     localStorage.clear();
   })
 
-console.log(localStorage)  
+// console.log(localStorage)  
 
 
