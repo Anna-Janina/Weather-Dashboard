@@ -24,8 +24,6 @@ function weatherNow(city) {
     .then(res => res.json())
     .then(data => {
         updateWeatherInfo(data);
-        // getWeatherData(city);
-        // displayForecast(city);
         saveSearchToLocalStorage(city)
     })
     .catch(error => {
@@ -35,17 +33,14 @@ function weatherNow(city) {
 }
 
 
-
 function displayWeather(event) {
     event.preventDefault();
     if (searchCity.val().trim() !== "") {
         city = searchCity.val().trim();
             weatherNow(city);
             getWeatherForecast(city)
-            // getWeatherData(city)
             .then(updateWeatherInfo)
             .then(() => saveSearchToLocalStorage(city))
-            // .then(() => displayForecast(city))
             .catch(error => {
               $("#error-message").html("Error: " + error.message);
               $("#error-message").show();
@@ -62,6 +57,7 @@ function convertTemperature(temp, unit) {
         }
     }
 
+
 function updateWeatherInfo(data) {
     let iconUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
     var date=new Date(data.dt*1000).toLocaleDateString();
@@ -69,7 +65,7 @@ function updateWeatherInfo(data) {
     $("#current-city").append("<img src='" + iconUrl + "'>");
     let today = new Date();
     let day = today.toLocaleDateString();
-    let temperatureInCelsius = data.main.temp - 273.15;
+    let temperatureInCelsius = (data.main.temp - 273.15).toFixed(1);
     $("#temperature").html(" " + temperatureInCelsius + "°C");
     let windSpeed = data.wind.speed;
     $("#wind-speed").html(" " + windSpeed + " m/s");
@@ -86,31 +82,27 @@ function getWeatherForecast(city) {
         const forecastData = data.list
         let forecastHTML = '';
 
+
         for (let i = 0; i < forecastData.length; i += 8) {
             const forecast = forecastData[i]
             const date = new Date(forecast.dt * 1000)
             const temp = forecast.main.temp;
-            const weather = forecast.weather[0].description;
+            const wind = forecast.wind.speed;
+            const icon = forecast.weather[0].icon;
+            const iconUrl = `http://openweathermap.org/img/w/${icon}.png`;
+        
+                 forecastHTML += `<div class="col-sm-2 border border-dark forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
+                 <p>${date.toLocaleDateString()}</p>
+                 <img src="${iconUrl}">
+                 <p>Temp: ${convertTemperature(temp, "C").toFixed(1)}°C</p>
 
-            forecastHTML += `<div>
-                <div class="col-sm-2 border border-dark forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
-                <p id="fDate0>${date.toLocaleDateString()}</p>
-                <p id="fImg0"></p>
-                <p>Temp:<span id="fTemp0">${temp}</span></p>
-                <p>Wind:<span id="fWind0">${weather}</span></p>
-                <p>Humidity:<span id="fHumidity0">${temp}</span></p>
-            </div>
-            </div>`;
+                 <p>Wind: ${wind}</p>
+                 <p>Humidity: ${forecast.main.humidity}%</p>
+                 </div>`;
         }
-        document.querySelector('.forecast-container').innerHTML = forecastHTML
+        $(".forecast-container").html(forecastHTML);
     })
-    .catch(err => console.log(err))
 }
-getWeatherForecast()
-
-
-
-
 
 function saveSearchToLocalStorage(city) {
     var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
@@ -127,3 +119,5 @@ $("#clear-history").on("click", function (event) {
   })
 
 console.log(localStorage)  
+
+

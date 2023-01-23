@@ -8,3 +8,9 @@ body {
     height: 70px;
 }
 
+.forecast-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+  
