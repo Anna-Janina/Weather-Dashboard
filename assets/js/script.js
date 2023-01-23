@@ -10,15 +10,6 @@ var currentHumidity = $("#humidity");
 let city = "";
 
 
-function displayWeather(event){
-    event.preventDefault();
-    if(searchCity.val().trim()!==""){
-        city=searchCity.val().trim();
-        weatherNow(city);
-    }
-}
-
-
 function weatherNow(city) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
     .then(res => res.json())
@@ -105,10 +96,6 @@ function getWeatherForecast(city) {
 }
 
 
-
-
-
-
 function saveSearchToLocalStorage(city) {
     var searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
     searchHistory.push(city)
@@ -117,8 +104,6 @@ function saveSearchToLocalStorage(city) {
     historyList.append(`<p>${city}</p>`)
 }
 
-// Create a container element to hold the buttons
-let historyContainer = $("#history-container");
 
 function createHistoryButton(city) {
     var historyContainer = document.getElementById("history-container");
@@ -131,6 +116,7 @@ function createHistoryButton(city) {
     });
     historyContainer.appendChild(newButton);
 }
+
 fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
     .then(res => res.json())
     .then(data => {
@@ -157,24 +143,23 @@ $(document).ready(function() {
 });
 
 
-function clearSearch(){
+clearHistory.on("click", function(){
     localStorage.clear();
-    $("#history").empty();
- }
- clearHistory.on("click", clearSearch);
-
-
-
-clearHistory.on("click", function () {
-    localStorage.clear();
-    $("#history").empty();
+    // $("#history-list").html("");
 });
 
 
+// clearHistory.on("click", clearLocalStorage);
+
+
+
+// $("#clear-history").on("click", clearSearchHistory);
+
+
 $("#searchButton").on("click", displayWeather);
-$("#clear-history").on("click", function (event) {
-    localStorage.clear();
-  })
+// $("#clear-history").on("click", function (event) {
+//     localStorage.clear();
+//   })
 
 // console.log(localStorage)  
 
