@@ -10,6 +10,15 @@ var currentHumidity = $("#humidity");
 let city = "";
 
 
+function displayWeather(event){
+    event.preventDefault();
+    if(searchCity.val().trim()!==""){
+        city=searchCity.val().trim();
+        weatherNow(city);
+    }
+}
+
+
 function weatherNow(city) {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
     .then(res => res.json())
@@ -38,7 +47,6 @@ function displayWeather(event) {
               $("#error-message").html("Error: " + error.message);
               $("#error-message").show();
             });
-            
         }
     }
 
@@ -81,7 +89,6 @@ function getWeatherForecast(city) {
             const wind = forecast.wind.speed;
             const icon = forecast.weather[0].icon;
             const iconUrl = `http://openweathermap.org/img/w/${icon}.png`;
-        
                  forecastHTML += `<div class="col-sm-2 border border-dark forecast ml-2 mb-3 p-2 mt-2 rounded" style="background-color: rgb(160, 162, 87);">
                  <p>${date.toLocaleDateString()}</p>
                  <img src="${iconUrl}">
@@ -117,6 +124,7 @@ function createHistoryButton(city) {
     historyContainer.appendChild(newButton);
 }
 
+
 fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey)
     .then(res => res.json())
     .then(data => {
@@ -125,7 +133,6 @@ fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + 
     })
 
 
-// On page load, check local storage for previous searches
 $(document).ready(function() {
     let previousSearches = JSON.parse(localStorage.getItem("searches")) || [];
     previousSearches.forEach(createHistoryButton);
@@ -145,22 +152,9 @@ $(document).ready(function() {
 
 clearHistory.on("click", function(){
     localStorage.clear();
-    // $("#history-list").html("");
 });
 
 
-// clearHistory.on("click", clearLocalStorage);
+$("#clear-history").on("click", clearHistory);
 
-
-
-// $("#clear-history").on("click", clearSearchHistory);
-
-
-$("#searchButton").on("click", displayWeather);
-// $("#clear-history").on("click", function (event) {
-//     localStorage.clear();
-//   })
-
-// console.log(localStorage)  
-
-
+$("#searchButton").on("click", displayWeather); 
