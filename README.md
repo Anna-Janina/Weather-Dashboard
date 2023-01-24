@@ -22,14 +22,15 @@ THEN I am again presented with current and future conditions for that city
 - This application is made for travelers who would like to know the weather forecast (temperature, weather icon, wind speed and humidity for the next 5 days.
 - When you open the weather dashboard, the search option for a city is displayed.
 - After entering a city you are displayed with the weather forecast for the next 5 days.
+- Search cities will be stored in the local storage under the search option until you refresh the website.
 
-https://anna-janina.github.io/Work-Day-Scheduler/
+https://anna-janina.github.io/Weather-Dashboard/
 
 ## Installation
 - N/A
 
 ## Usage
-![alt text](./assets/images%20/Work%20Day%20Scheduler.png)
+![alt text](./assets/images/Weather%20Dashboard.png)
   
 ## Credits
 - N/A
